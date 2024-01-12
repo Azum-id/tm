@@ -15,6 +15,7 @@
                                     <th>Kode TRX</th>
                                     <th>Tanggal</th>
                                     <th>Nama Pengunjung</th>
+                                    <th>Jumlah Tiket</th>
                                     <th>Total Harga</th>
                                     <th>Operator</th>
                                 </tr>
@@ -30,6 +31,7 @@
                                         <td>{{ $modifiedTm }}</td>
                                         <td>{{ $scan->created_at }}</td>
                                         <td>{{ $scan->customer_name }}</td>
+                                        <td class="text-center">{{ $scan->total_ticket }} Tiket</td>
                                         {{-- <td>{{ $scan->total_price }}</td>formated price --}}
                                         <td>Rp. {{ number_format($scan->total_price, 0, ',', '.') }}</td>
                                         <td>{{ $scan->user->name }}</td>
@@ -38,7 +40,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th colspan="2" class="text-center">Total Transaksi</th>
+                                    <th colspan="3" class="text-center">Total Transaksi</th>
                                     <th>{{ $transactions->count() }}</th>
                                     <th colspan="2" class="text-center">Total Pendapatan</th>
                                     <th>Rp. {{ number_format($transactions->sum('total_price'), 0, ',', '.') }}</th>
@@ -54,6 +56,17 @@
 
 @section('azs_js')
     <script>
-        $('.data-table').DataTable();
+        $('.data-table').DataTable({
+            columnDefs: [{
+                    width: 10,
+                    targets: 4
+                },
+                {
+                    searchable: false,
+                    targets: 3
+                }
+            ],
+            fixedColumns: true,
+        });
     </script>
 @endsection

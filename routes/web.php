@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Ticket;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CsrfController;
 use App\Http\Controllers\UserController;
@@ -31,6 +32,11 @@ Route::middleware('kasir')->group(function () {
 
 Route::middleware('admin')->group(function () {
     Route::resource('/admin/user', UserController::class);
+    Route::get('admin/tickets', function () {
+        $tickets = Ticket::whereDate('created_at', date('Y-m-d'))->get();
+        // return $tickets;
+        return view('admin.listticket', compact('tickets'));
+    });
 });
 
 // Authenticated Routes
