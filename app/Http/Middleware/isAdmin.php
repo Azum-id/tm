@@ -19,6 +19,7 @@ class isAdmin
         if (auth()->check() && (auth()->user()->role == "admin")) {
             return $next($request);
         }
-        abort(403, "You don't have permission to access this page");
+
+        return redirect()->route('login');
     }
 }
